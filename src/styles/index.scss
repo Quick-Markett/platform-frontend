@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+@import 'animate.css';
+@import 'react-toastify/dist/ReactToastify.min.css';
+@import 'swiper/css';
+@import 'swiper/css/pagination';
+@import 'swiper/css/navigation';
+
+html {
+  scroll-behavior: smooth !important;
+}
+
+body {
+  @apply font-light box-border text-neutral-700;
+}
