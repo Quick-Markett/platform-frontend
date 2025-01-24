@@ -1,7 +1,8 @@
 import type { Metadata } from 'next'
 
-import '@/styles/index.scss'
 import { APP_FONT } from '@/constants/font'
+
+import '@/styles/index.scss'
 
 export const metadata: Metadata = {
   title: 'Create Next App',
