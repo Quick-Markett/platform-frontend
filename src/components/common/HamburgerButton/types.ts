@@ -1,4 +1,4 @@
-import { ButtonCopy } from '@/types/copy/buttonCopy'
+import { ButtonCopy } from '@/types/components/buttonCopy'
 
 type Variants = 'primary' | 'secondary'
 
