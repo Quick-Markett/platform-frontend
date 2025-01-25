@@ -2,6 +2,7 @@ import { NextPage } from 'next'
 
 import { Footer } from '@/components/common/Footer'
 import { Navbar } from '@/components/common/Navbar'
+import { WelcomeBar } from '@/components/common/WelcomeBar'
 import { getMetaData } from '@/utils/seo/getMetaData'
 
 import { MarketOptions } from './components/MarketOptions'
@@ -19,7 +20,8 @@ const Page: NextPage = async () => {
   return (
     <>
       <Navbar />
-      <main className="pt-[72px]">
+      <WelcomeBar />
+      <main>
         <Offers />
         <MarketOptions />
       </main>

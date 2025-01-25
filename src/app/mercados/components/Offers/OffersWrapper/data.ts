@@ -5,7 +5,7 @@ import { OfferProductProps } from './types'
 export const OFFERS: OfferProductProps[] = [
   {
     productName: 'Arroz 5kg',
-    marketName: 'marketName Central',
+    marketName: 'Mercado Central',
     oldPrice: 25.0,
     newestPrice: 19.9,
     discount: 5.1
@@ -26,7 +26,7 @@ export const OFFERS: OfferProductProps[] = [
   },
   {
     productName: 'Açúcar Refinado 1kg',
-    marketName: 'HipermarketName Top',
+    marketName: 'Hiper Top',
     oldPrice: 4.5,
     newestPrice: 3.89,
     discount: 0.61
@@ -61,7 +61,7 @@ export const OFFERS: OfferProductProps[] = [
   },
   {
     productName: 'Sabonete em Barra',
-    marketName: 'marketName Rápido',
+    marketName: 'Mercado Rápido',
     oldPrice: 2.0,
     newestPrice: 1.49,
     discount: 0.51
