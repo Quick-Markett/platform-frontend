@@ -1,18 +1,7 @@
-interface DataLayerEvent {
-  event: string
-}
+import { User } from './authentication'
 
-declare global {
-  interface Window {
-    dataLayer: DataLayerEvent[]
+declare module 'next-auth' {
+  interface Session extends DefaultSession {
+    user: User
   }
 }
-
-interface PagesType {
-  [key: string]: {
-    title?: string
-    description?: string
-  }
-}
-
-export type Locale = 'pt' | 'en'

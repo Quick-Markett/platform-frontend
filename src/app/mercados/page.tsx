@@ -5,6 +5,7 @@ import { Navbar } from '@/components/common/Navbar'
 import { getMetaData } from '@/utils/seo/getMetaData'
 
 import { MarketOptions } from './components/MarketOptions'
+import { Offers } from './components/Offers'
 
 export async function generateMetadata() {
   return getMetaData({
@@ -19,6 +20,7 @@ const Page: NextPage = async () => {
     <>
       <Navbar />
       <main className="pt-[72px]">
+        <Offers />
         <MarketOptions />
       </main>
       <Footer />

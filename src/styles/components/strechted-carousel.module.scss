@@ -1,0 +1,24 @@
+.strechtedHorizontalSwiper {
+  :global(.swiper-wrapper) {
+    align-items: stretch;
+  }
+
+
+  :global(.swiper-slide) {
+    height: auto;
+  }
+
+
+  :global(.swiper-pagination-bullet-active) {
+    background: #2563eb !important;
+    width: 48px !important;
+  }
+
+
+  :global(.swiper-pagination-bullet) {
+    height: 2.6px;
+    background: #2563eb !important;
+    width: 24px;
+    border-radius: 0;
+  }
+}
