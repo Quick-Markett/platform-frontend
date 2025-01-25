@@ -12,15 +12,15 @@ export const Navbar: React.FC = () => {
           </figure>
           <input
             autoComplete="off"
-            className="w-full rounded-sm bg-neutral-700 bg-opacity-10 px-3 py-2 pl-12 text-base outline-none duration-default focus:border-neutral-400 focus:ring-2 focus:ring-neutral-400"
+            className="w-full rounded-sm bg-white px-3 py-2 pl-12 text-base outline-none ring-1 ring-neutral-300 duration-default focus:border-neutral-400 focus:ring-2 focus:ring-neutral-400"
             id="search"
             name="search"
             type="text"
           />
         </div>
         <div className="ml-2 flex items-center gap-4 lg:gap-6">
-          <Shop className="h-4 w-4 cursor-pointer text-neutral-700 transition-all duration-300 hover:brightness-125" />
-          <Account className="h-4 w-4 cursor-pointer text-neutral-700 transition-all duration-300 hover:brightness-125" />
+          <Shop className="h-5 w-5 cursor-pointer text-neutral-700 transition-all duration-300 hover:brightness-125" />
+          <Account className="h-5 w-5 cursor-pointer text-neutral-700 transition-all duration-300 hover:brightness-125" />
         </div>
       </div>
     </nav>
