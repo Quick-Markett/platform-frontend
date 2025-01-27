@@ -1,3 +1,3 @@
 import { Auth } from '@/services/auth'
 
-export const instanceAuth = new Auth()
+export const auth = new Auth()

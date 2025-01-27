@@ -1,65 +1,61 @@
-// import { cookies } from 'next/headers'
+import { auth } from '@/instances/instanceAuth'
+import { getUserSession } from '@/utils/auth/getUserSession'
 
-// import { Auth } from '@/services/auth'
-// import { generateDefaultUsername } from '@/utils/auth/generateDefaultUsername'
-// import { getUserSession } from '@/utils/auth/getUserSession'
+export const googleOptions = {
+  clientId: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  async profile(profile) {
+    const user = await getUserSession()
 
-// export const googleOptions = {
-//   clientId: process.env.GOOGLE_CLIENT_ID,
-//   clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-//   async profile(profile) {
-//     const cookie = await cookies()
-//     const locale = cookie.get('NEXT_LOCALE')?.value
+    const { sub: googleId, email, picture, given_name, family_name } = profile
 
-//     const user = await getUserSession()
+    if (!user) {
+      try {
+        const { data: userData, error } = await auth.google.loginUser({
+          email
+        })
 
-//     const { sub: googleId, email, picture, given_name, family_name } = profile
+        if (userData && !error) {
+          return {
+            ...userData
+          }
+        }
 
-//     if (!user) {
-//       try {
-//         const { data: userData, error } = await Auth.google.loginUser({
-//           email
-//         })
+        const { data: createdUserData } = await auth.google.createUser({
+          email,
+          firstname: given_name,
+          lastname: family_name,
+          profile_picture: picture,
+          google_id: googleId,
+          address: '',
+          city: '',
+          password: '',
+          state: '',
+          zip_code: ''
+        })
 
-//         if (userData && !error) {
-//           return {
-//             ...userData
-//           }
-//         }
+        if (createdUserData) {
+          const { data: loginData, error: loginError } =
+            await auth.google.loginUser({
+              email
+            })
 
-//         const { data: createdUserData } = await auth.google.createUser({
-//           email,
-//           firstname: given_name,
-//           lastname: family_name,
-//           profile_picture: picture,
-//           background_picture: 'blank',
-//           google_id: googleId,
-//           locale,
-//           username: generateDefaultUsername(given_name)
-//         })
+          if (loginData && !loginError) {
+            return {
+              ...loginData
+            }
+          }
+        }
+      } catch (error) {
+        console.error({
+          googleOptionsErrorMessage: error.message
+        })
+      }
+    }
 
-//         if (createdUserData) {
-//           const { data: loginData, error: loginError } =
-//             await auth.google.loginUser({
-//               email
-//             })
-
-//           if (loginData && !loginError) {
-//             return {
-//               ...loginData
-//             }
-//           }
-//         }
-//       } catch (error) {
-//         console.error({
-//           googleOptionsErrorMessage: error.message
-//         })
-//       }
-//     }
-
-//     return {
-//       id: user.id,
-//       ...user
-//     }
-//   }
-// }
+    return {
+      id: user.id,
+      ...user
+    }
+  }
+}
