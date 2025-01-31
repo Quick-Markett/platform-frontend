@@ -5,6 +5,7 @@ import { motorApiHeaders } from '@/constants/headers/motorApiHeaders'
 
 import { GoogleAuth } from './google'
 import { SsoAuth } from './sso'
+
 export class Auth {
   private instance: AxiosInstance
 
