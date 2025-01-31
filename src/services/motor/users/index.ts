@@ -1,7 +1,9 @@
 import { AxiosInstance } from 'axios'
-import { GetUserByIdPayload } from './types'
-import { ServiceRequestResponse } from '@/types/services/serviceRequestResponse'
+
 import { User } from '@/types/models/user'
+import { ServiceRequestResponse } from '@/types/services/serviceRequestResponse'
+
+import { GetUserByIdPayload } from './types'
 
 export class Users {
   private instance: AxiosInstance
