@@ -27,10 +27,12 @@ export const Navbar: React.FC = () => {
               <MagnifyingGlass className="h-4 w-4 text-neutral-600" />
             </figure>
             <input
-              autoComplete="off"
               className="w-full rounded-sm bg-white px-3 py-2 pl-12 text-base outline-none ring-1 ring-neutral-300 duration-default focus:border-neutral-400 focus:ring-2 focus:ring-neutral-400"
               id="search"
+              maxLength={80}
+              minLength={1}
               name="search"
+              spellCheck={false}
               type="text"
             />
           </div>

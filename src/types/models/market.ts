@@ -3,6 +3,9 @@ export interface Market {
   city: string
   created_at: string
   deleted_at: string
+  delivery_max_time: number
+  delivery_min_time: number
+  delivery_price: number
   description: string
   email: string
   id: number
