@@ -43,7 +43,7 @@ export class SsoAuth {
   ): Promise<ServiceRequestResponse<User>> => {
     try {
       const { data, status } = await this.instance.get(
-        `/users/login-user/${payload.email}`
+        `/users/sso/login-user/${payload.email}`
       )
 
       if (status !== 200) {

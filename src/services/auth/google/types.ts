@@ -18,3 +18,8 @@ export interface CreateUserData
 export interface LoginUserData {
   email: string
 }
+
+export interface UpdateUserData {
+  googleId: string
+  userId: number
+}
