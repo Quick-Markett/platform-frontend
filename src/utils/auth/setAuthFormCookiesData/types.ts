@@ -1,5 +1,7 @@
+import { AuthFormCustomSteps } from '@/components/common/AuthForm/types'
+
 export interface SetAuthFormCookiesDataProps {
+  cookiesAuthInitialStep?: AuthFormCustomSteps
   cookiesGoogleId?: string
-  cookiesLinkedinId?: string
   cookiesUserEmail?: string
 }
