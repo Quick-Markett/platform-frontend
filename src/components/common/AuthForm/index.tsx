@@ -27,12 +27,12 @@ export const AuthForm: React.FC = () => {
     >
       {options => (
         <>
-          <LoginForm
+          <SignUpForm
             {...options}
             commonFormsData={commonFormsData}
             setCommonFormsData={handleSetCommonFormsData}
           />
-          <SignUpForm
+          <LoginForm
             {...options}
             commonFormsData={commonFormsData}
             setCommonFormsData={handleSetCommonFormsData}

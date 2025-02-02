@@ -1,14 +1,20 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { AuthOptions } from 'next-auth'
+import CredentialsProvider from 'next-auth/providers/credentials'
 import GoogleProvider from 'next-auth/providers/google'
 
 import { User } from '@/types/models/user'
 
+import { credentialsOptions } from './credentialsOptions'
 import { googleOptions } from './googleOptions'
 
 export const authOptions: AuthOptions = {
-  // @ts-expect-error
-  providers: [GoogleProvider(googleOptions)],
+  providers: [
+    // @ts-expect-error
+    CredentialsProvider(credentialsOptions),
+    // @ts-expect-error
+    GoogleProvider(googleOptions)
+  ],
   callbacks: {
     jwt: async data => {
       const { user, token, trigger, session } = data

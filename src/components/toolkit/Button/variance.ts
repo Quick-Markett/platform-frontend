@@ -39,6 +39,7 @@ export const buttonVariants = cva(
           'hover:shadow',
           'hover:brightness-[110%]'
         ],
+        tertiary: ['text-slate-50', 'bg-green-600', 'hover:brightness-[115%]'],
         danger: [
           'text-neutral-50',
           'bg-gradient-to-tr',

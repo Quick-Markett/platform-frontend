@@ -3,23 +3,19 @@ import { z } from 'zod'
 import { normalEmailValidation } from '@/utils/helpers/normalEmailValidation'
 import { verifyPhoneMinLength } from '@/utils/helpers/verifyPhoneMinLength'
 
-export const loginFormSchema = ({
-  requiredFieldCopy
-}: {
-  requiredFieldCopy: string
-}) =>
+export const loginFormSchema = () =>
   z.object({
     email: z
       .string()
-      .nonempty(requiredFieldCopy)
-      .email({ message: requiredFieldCopy })
+      .nonempty('Esse campo é obrigatório.')
+      .email({ message: 'Esse campo é obrigatório.' })
       .refine(value => normalEmailValidation({ value }), {
-        message: requiredFieldCopy
+        message: 'Esse campo é obrigatório.'
       }),
     password: z
       .string()
-      .nonempty(requiredFieldCopy)
+      .nonempty('Esse campo é obrigatório.')
       .refine(value => verifyPhoneMinLength({ value }), {
-        message: requiredFieldCopy
+        message: 'Esse campo é obrigatório.'
       })
   })

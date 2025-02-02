@@ -5,6 +5,7 @@ import Error from 'next/error'
 import Image from 'next/image'
 import { useEffect, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
+import { toast } from 'react-toastify'
 
 import { Button } from '@/components/toolkit/Button'
 import { InputField } from '@/components/toolkit/Fields/InputField'
@@ -36,7 +37,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
     resolver: zodResolver(signUpFormSchema())
   })
 
-  const [isLoading, setIsLoading] = useState({
+  const [isLoadingSubmit, setIsLoadingSubmit] = useState({
     email: false,
     google: false
   })
@@ -48,6 +49,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
     confirmPassword
   }: OnSubmitPayload) => {
     if (password !== confirmPassword) {
+      toast.info('The passwords are diferent!')
       return new Error({
         statusCode: 500,
         title: 'The passwords are diferent!'
@@ -56,7 +58,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
 
     const email = originalEmail.trim().toLowerCase()
 
-    setIsLoading(prev => ({
+    setIsLoadingSubmit(prev => ({
       ...prev,
       email: true
     }))
@@ -85,7 +87,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
     } catch (signUpErr) {
       console.error(signUpErr)
     } finally {
-      setIsLoading({
+      setIsLoadingSubmit({
         email: false,
         google: false
       })
@@ -93,7 +95,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
   }
 
   const handleSignInWithGoogle = async () => {
-    setIsLoading(prev => ({
+    setIsLoadingSubmit(prev => ({
       ...prev,
       google: true
     }))
@@ -108,36 +110,71 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
 
   return (
     <form
-      className="flex flex-col gap-4"
+      className="animate__animated animate__fadeIn flex flex-col items-center gap-8 pt-8"
       id="login-form"
       onSubmit={handleSubmit(onSubmit)}
     >
-      <InputField
-        id="name"
-        placeholder="Digite o seu nome"
-        autoFocus
-        {...register('name')}
-      />
-      <InputField
-        id="email"
-        placeholder="Digite o seu email"
-        autoFocus
-        {...register('email')}
-      />
-      <InputField
-        id="password"
-        placeholder="Digite a sua senha"
-        autoFocus
-        {...register('password')}
-      />
-      <InputField
-        id="confirmPassword"
-        placeholder="Confirme a sua senha"
-        autoFocus
-        {...register('confirmPassword')}
-      />
+      <section className="flex w-full flex-col gap-1">
+        <InputField
+          id="name"
+          label="Nome do Usuário"
+          maxLength={80}
+          minLength={2}
+          placeholder="Digite o seu nome"
+          spellCheck={false}
+          autoFocus
+          {...register('name')}
+          variant="secondary"
+        />
+        <InputField
+          id="email"
+          label="Email"
+          maxLength={80}
+          minLength={8}
+          placeholder="Digite o seu email"
+          spellCheck={false}
+          autoFocus
+          {...register('email')}
+          variant="secondary"
+        />
+        <InputField
+          id="password"
+          label="Senha"
+          maxLength={40}
+          minLength={8}
+          placeholder="Digite a sua senha"
+          spellCheck={false}
+          autoFocus
+          {...register('password')}
+          variant="secondary"
+        />
+        <InputField
+          id="confirmPassword"
+          label="Confirmar Senha"
+          maxLength={40}
+          minLength={8}
+          placeholder="Confirme a sua senha"
+          spellCheck={false}
+          autoFocus
+          {...register('confirmPassword')}
+          variant="secondary"
+        />
+        <Button
+          className="mt-4 min-w-full md:text-sm"
+          isLoading={isLoadingSubmit.email || isValidating}
+          type="submit"
+          variant="tertiary"
+        >
+          Cadastrar
+        </Button>
+      </section>
+      <div className="flex w-full items-center gap-4">
+        <hr className="h-[1px] w-full bg-neutral-400" />
+        <p className="text-sm text-neutral-600">ou</p>
+        <hr className="h-[1px] w-full bg-neutral-400" />
+      </div>
       <Button
-        className="flex w-full cursor-pointer items-center gap-2 rounded-md border border-slate-200 px-2 py-1.5 transition-all duration-300 hover:bg-slate-50"
+        className="flex w-full cursor-pointer items-center gap-2 rounded-md border border-neutral-300 px-2 py-1.5 transition-all duration-300 hover:bg-slate-50"
         onClick={() => handleSignInWithGoogle()}
         variant="custom"
       >
@@ -150,14 +187,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
             width={512}
           />
         </figure>
-        <p className="text-sm text-slate-500">Entrar com o Google</p>
-      </Button>
-      <Button
-        className="min-w-full"
-        isLoading={isLoading.email || isValidating}
-        type="submit"
-      >
-        Cadastrar
+        <p className="text-sm text-neutral-600">Entrar com o Google</p>
       </Button>
     </form>
   )

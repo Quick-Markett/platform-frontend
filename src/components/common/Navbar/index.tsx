@@ -1,13 +1,17 @@
 import { Anchor } from '@/components/toolkit/Anchor'
+import { getUserSession } from '@/utils/auth/getUserSession'
 
 import { Account } from './icons/Account'
 import { NAVBAR_LINKS } from './icons/data'
 import { MagnifyingGlass } from './icons/MagnifyingGlass'
 import { Shop } from './icons/Shop'
+import { LoginButton } from './LoginButton'
 
-export const Navbar: React.FC = () => {
+export const Navbar: React.FC = async () => {
+  const user = await getUserSession()
+
   return (
-    <nav className="sticky inset-0 z-[99999] max-h-[72px] w-full border-b border-neutral-100 bg-white px-6 py-4 drop-shadow-sm backdrop-blur-sm backdrop-filter lg:px-4 xl:px-0">
+    <nav className="sticky inset-0 z-50 max-h-[72px] w-full border-b border-neutral-100 bg-white px-6 py-4 drop-shadow-sm backdrop-blur-sm backdrop-filter lg:px-4 xl:px-0">
       <div className="mx-auto flex w-full max-w-7xl items-center justify-center gap-4 lg:gap-8">
         <div className="flex w-full items-center gap-4 lg:gap-6">
           {NAVBAR_LINKS.map((navbarLink, index: number) => (
@@ -36,10 +40,14 @@ export const Navbar: React.FC = () => {
               type="text"
             />
           </div>
-          <div className="ml-2 flex items-center gap-4 lg:gap-6">
-            <Shop className="h-5 w-5 cursor-pointer text-neutral-700 transition-all duration-300 hover:brightness-125" />
-            <Account className="h-5 w-5 cursor-pointer text-neutral-700 transition-all duration-300 hover:brightness-125" />
-          </div>
+          {user ? (
+            <div className="ml-2 flex items-center gap-4 lg:gap-6">
+              <Shop className="h-5 w-5 cursor-pointer text-neutral-700 transition-all duration-300 hover:brightness-125" />
+              <Account className="h-5 w-5 cursor-pointer text-neutral-700 transition-all duration-300 hover:brightness-125" />
+            </div>
+          ) : (
+            <LoginButton />
+          )}
         </div>
       </div>
     </nav>
