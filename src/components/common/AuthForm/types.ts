@@ -1,6 +1,6 @@
 import { StepProps } from '@/components/toolkit/Stepper/types'
 
-export type AuthFormCustomSteps = 'login' | 'signUp'
+export type AuthFormCustomSteps = 'login' | 'signUp' | 'feedback'
 
 export interface CommonFormsData {
   email?: string

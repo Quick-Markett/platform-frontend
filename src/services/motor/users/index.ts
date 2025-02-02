@@ -3,7 +3,7 @@ import { AxiosInstance } from 'axios'
 import { User } from '@/types/models/user'
 import { ServiceRequestResponse } from '@/types/services/serviceRequestResponse'
 
-import { GetUserByIdPayload } from './types'
+import { GetUserByEmailPayload, GetUserByIdPayload } from './types'
 
 export class Users {
   private instance: AxiosInstance
@@ -32,6 +32,30 @@ export class Users {
 
       return {
         error: getUserByIdErr.message
+      }
+    }
+  }
+
+  getUserByEmail = async ({
+    email
+  }: GetUserByEmailPayload): Promise<ServiceRequestResponse<User>> => {
+    try {
+      const { data, status } = await this.instance.get(
+        `/users/get-user-by-email/${email.toString()}`
+      )
+
+      if (status !== 200) {
+        throw new Error(data.message)
+      }
+
+      return data
+    } catch (getUserByEmailErr) {
+      console.error({
+        getUserByEmailErrMessage: getUserByEmailErr.message
+      })
+
+      return {
+        error: getUserByEmailErr.message
       }
     }
   }

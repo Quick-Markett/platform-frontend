@@ -15,5 +15,5 @@ export interface Market {
   phone_number: string
   state: string
   updated_at: string
-  zip_code: string
+  zip_code?: string
 }
