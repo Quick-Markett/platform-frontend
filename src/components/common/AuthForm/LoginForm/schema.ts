@@ -1,7 +1,6 @@
 import { z } from 'zod'
 
 import { normalEmailValidation } from '@/utils/helpers/normalEmailValidation'
-import { verifyPhoneMinLength } from '@/utils/helpers/verifyPhoneMinLength'
 
 export const loginFormSchema = () =>
   z.object({
@@ -12,10 +11,5 @@ export const loginFormSchema = () =>
       .refine(value => normalEmailValidation({ value }), {
         message: 'Esse campo é obrigatório.'
       }),
-    password: z
-      .string()
-      .nonempty('Esse campo é obrigatório.')
-      .refine(value => verifyPhoneMinLength({ value }), {
-        message: 'Esse campo é obrigatório.'
-      })
+    password: z.string().nonempty('Esse campo é obrigatório.')
   })

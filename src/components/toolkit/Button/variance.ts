@@ -5,7 +5,7 @@ export const buttonVariants = cva(
     'max-w-fit',
     'rounded-sm',
     'px-6',
-    'py-2',
+    'py-2.5',
     'w-full',
     'tracking-wide',
     'transition-all',

@@ -11,12 +11,9 @@ import { Button } from '@/components/toolkit/Button'
 import { InputField } from '@/components/toolkit/Fields/InputField'
 import useRefreshRoute from '@/hooks/useRefreshRoute'
 import { useUserSession } from '@/hooks/useUserSession'
-import { auth } from '@/instances/instanceAuth'
-import { instanceMotor } from '@/instances/instanceMotor'
 import { handleCloseAuthModal } from '@/utils/customEvents/@handlers/authModal/handleCloseAuthModal'
 import { zodResolver } from '@hookform/resolvers/zod'
 
-import { DEFAULT_USER_DATA } from './data'
 import { signUpFormSchema } from './schema'
 import { OnSubmitPayload, SignUpFormInputs, SignUpFormProps } from './types'
 
@@ -48,6 +45,8 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
     password,
     confirmPassword
   }: OnSubmitPayload) => {
+    console.log('teste')
+
     if (password !== confirmPassword) {
       toast.info('The passwords are diferent!')
       return new Error({
@@ -64,26 +63,20 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
     }))
 
     try {
-      const { error: accountDoesNotExist } =
-        await instanceMotor.users.getUserByEmail({ email })
+      const response = await signIn('credentials', {
+        email,
+        password,
+        redirect: true,
+        callbackUrl: undefined,
+        action: 'signUp'
+      })
 
-      if (accountDoesNotExist) {
-        const { error } = await auth.sso.createUser({
-          ...DEFAULT_USER_DATA,
-          name,
-          email,
-          password
-        })
-
-        if (error) {
-          throw new Error({
-            statusCode: 500,
-            title: 'Error when trying to create new user'
-          })
-        }
-
-        setActiveStep('feedback')
+      if (response?.error) {
+        toast.info('Cannot create a new account!')
+        return
       }
+
+      setActiveStep('feedback')
     } catch (signUpErr) {
       console.error(signUpErr)
     } finally {
@@ -163,7 +156,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
           className="mt-4 min-w-full md:text-sm"
           isLoading={isLoadingSubmit.email || isValidating}
           type="submit"
-          variant="tertiary"
+          variant="primary"
         >
           Cadastrar
         </Button>

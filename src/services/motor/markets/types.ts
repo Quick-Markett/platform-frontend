@@ -4,6 +4,10 @@ export interface GetMarketByIdPayload {
   marketId: number
 }
 
+export interface GetMarketBySlugPayload {
+  slug: string
+}
+
 export interface CreateMarketPayload {
   payload: Pick<
     Market,

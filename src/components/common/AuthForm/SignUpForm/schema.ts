@@ -18,16 +18,6 @@ export const signUpFormSchema = () =>
       .refine(value => normalEmailValidation({ value }), {
         message: 'Esse campo é obrigatório.'
       }),
-    password: z
-      .string()
-      .nonempty('Esse campo é obrigatório.')
-      .refine(value => verifyPhoneMinLength({ value }), {
-        message: 'Esse campo é obrigatório.'
-      }),
-    confirmPassword: z
-      .string()
-      .nonempty('Esse campo é obrigatório.')
-      .refine(value => verifyPhoneMinLength({ value }), {
-        message: 'Esse campo é obrigatório.'
-      })
+    password: z.string().nonempty('Esse campo é obrigatório.'),
+    confirmPassword: z.string().nonempty('Esse campo é obrigatório.')
   })

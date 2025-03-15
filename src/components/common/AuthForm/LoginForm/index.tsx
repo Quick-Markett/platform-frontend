@@ -64,7 +64,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         password,
         redirect: true,
         callbackUrl: undefined,
-        action: 'signUp'
+        action: 'signIn'
       })
 
       if (response?.error) {
@@ -127,7 +127,7 @@ export const LoginForm: React.FC<LoginFormProps> = ({
           className="mt-4 min-w-full md:text-sm"
           isLoading={isLoadingSubmit.email || isValidating}
           type="submit"
-          variant="tertiary"
+          variant="primary"
         >
           Cadastrar
         </Button>

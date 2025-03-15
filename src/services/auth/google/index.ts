@@ -18,7 +18,7 @@ export class GoogleAuth {
     try {
       const { data, status } = await this.instance.post(`/google`, payload)
 
-      if (status !== 200) {
+      if (status !== 201) {
         throw new Error(data.message)
       }
 

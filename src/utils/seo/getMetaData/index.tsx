@@ -1,29 +1,36 @@
 import { Metadata } from 'next'
-import { OpenGraphType } from 'next/dist/lib/metadata/types/opengraph-types'
 
-interface GetMataDataProps {
-  description: string
-  opengraph: string
-  title: string
-  type?: OpenGraphType
-}
+import { BASE_URL } from '@/constants/environments/baseUrl'
+
+import { GetMetaDataProps } from './types'
 
 export const getMetaData = ({
-  title,
   description,
-  opengraph,
+  image,
+  title,
+  url,
   type = 'website'
-}: GetMataDataProps): Metadata => {
-  const images = [opengraph]
-
-  return {
+}: GetMetaDataProps): Metadata => {
+  const metaDataObject: Metadata = {
     title,
     description,
     openGraph: {
       type,
-      images,
+      images: [image],
       title,
-      description
+      description,
+      url: image
+    },
+    alternates: {
+      canonical: url
+    },
+    metadataBase: new URL(BASE_URL),
+    twitter: {
+      title,
+      description,
+      images: [image]
     }
   }
+
+  return metaDataObject
 }

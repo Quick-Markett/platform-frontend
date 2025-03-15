@@ -3,7 +3,7 @@ import { cva } from 'class-variance-authority'
 export const inputVariants = cva(
   [
     'rounded-sm',
-    'p-2',
+    'p-2.5',
     'text-sm',
     'ring-0',
     'outline-none',
@@ -14,7 +14,6 @@ export const inputVariants = cva(
       variant: {
         primary: [
           'border',
-          'py-[0.40rem]',
           'focus:ring-white',
           'focus:ring-1',
           'focus:border-white',
@@ -23,7 +22,6 @@ export const inputVariants = cva(
         secondary: [
           'border',
           'border-neutral-300',
-          'py-[0.40rem]',
           'focus:border-neutral-500',
           'bg-white'
         ]

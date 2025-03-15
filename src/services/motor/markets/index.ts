@@ -7,6 +7,7 @@ import {
   CreateMarketPayload,
   DeleteMarketPayload,
   GetMarketByIdPayload,
+  GetMarketBySlugPayload,
   UpdateMarketPayload
 } from './types'
 
@@ -57,6 +58,30 @@ export class Markets {
 
       return {
         error: getMarketByIdErr.message
+      }
+    }
+  }
+
+  getMarketBySlug = async ({
+    slug
+  }: GetMarketBySlugPayload): Promise<ServiceRequestResponse<Market>> => {
+    try {
+      const { data, status } = await this.instance.get(
+        `/markets/get-market-by-slug/${slug}`
+      )
+
+      if (status !== 200) {
+        throw new Error(data.message)
+      }
+
+      return data
+    } catch (getMarketBySlugErr) {
+      console.error({
+        getMarketBySlugErrMessage: getMarketBySlugErr.message
+      })
+
+      return {
+        error: getMarketBySlugErr.message
       }
     }
   }

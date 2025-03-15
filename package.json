@@ -20,7 +20,7 @@
     "cookie-cutter": "^0.2.0",
     "cookies-next": "^5.1.0",
     "jsonwebtoken": "^9.0.2",
-    "next": "15.1.6",
+    "next": "15.1.7",
     "next-auth": "^4.24.11",
     "next-cloudinary": "^6.16.0",
     "rate-limiter-flexible": "^5.0.5",

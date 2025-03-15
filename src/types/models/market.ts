@@ -13,6 +13,7 @@ export interface Market {
   logo_url: string
   name: string
   phone_number: string
+  slug: string
   state: string
   updated_at: string
   zip_code?: string

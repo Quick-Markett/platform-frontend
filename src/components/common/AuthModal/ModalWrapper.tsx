@@ -1,6 +1,7 @@
 'use client'
 
 import { deleteCookie } from 'cookies-next'
+import Image from 'next/image'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { cloneElement, useEffect, useState } from 'react'
 
@@ -59,7 +60,7 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
 
   useEffect(() => {
     updateUserSsoAccount(user)
-  })
+  }, [user])
 
   useEventListener('auth-modal-event', ({ action, data }) => {
     setEventData(data)
@@ -82,16 +83,27 @@ export const ModalWrapper: React.FC<ModalWrapperProps> = ({
         isOpen={isOpen}
         setIsOpen={handleSetIsOpen}
       >
-        <section className="rounded-sm bg-white px-5 py-10 md:w-[600px]">
-          {cloneElement(children, {
-            defaultCommonFormsData: {
-              initialStep:
-                eventData?.initialStep ?? cookiesData.cookiesAuthInitialStep,
-              redirectUrl: searchParamRedirectUrl,
-              email: cookiesData.cookiesUserEmail
-            }
-          })}
-        </section>
+        <div className="flex rounded-sm bg-white md:w-[1000px] lg:justify-between">
+          <figure className="hidden w-full lg:flex">
+            <Image
+              alt="Market Image"
+              className="h-full w-full rounded-l-sm object-cover"
+              height={1308}
+              src="https://c0.wallpaperflare.com/preview/574/326/475/market-grocery-store-supermarket-shop.jpg"
+              width={910}
+            />
+          </figure>
+          <section className="w-full py-10 pl-4 pr-4 lg:pl-8 lg:pr-6">
+            {cloneElement(children, {
+              defaultCommonFormsData: {
+                initialStep:
+                  eventData?.initialStep ?? cookiesData.cookiesAuthInitialStep,
+                redirectUrl: searchParamRedirectUrl,
+                email: cookiesData.cookiesUserEmail
+              }
+            })}
+          </section>
+        </div>
       </Modal>
     </div>
   )

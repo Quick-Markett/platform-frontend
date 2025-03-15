@@ -12,7 +12,8 @@ export async function generateMetadata() {
   return getMetaData({
     title: '',
     description: '',
-    opengraph: ''
+    image: '',
+    url: '/mercados'
   })
 }
 
