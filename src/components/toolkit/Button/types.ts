@@ -3,6 +3,7 @@ import { PropsWithChildren } from 'react'
 type ButtonVariantProp =
   | 'primary'
   | 'secondary'
+  | 'tertiary'
   | 'primaryOutline'
   | 'danger'
   | 'custom'

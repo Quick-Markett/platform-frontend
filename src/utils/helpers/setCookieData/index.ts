@@ -7,7 +7,7 @@ export const setCookieData = async (
   cookieValue: string,
   expirationDays?: number
 ) => {
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
 
   const options: { expires?: Date } = {}
 

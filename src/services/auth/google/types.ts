@@ -7,10 +7,8 @@ export interface CreateUserData
     | 'city'
     | 'email'
     | 'password'
-    | 'firstname'
-    | 'lastname'
+    | 'name'
     | 'state'
-    | 'zip_code'
     | 'profile_picture'
     | 'google_id'
   > {}

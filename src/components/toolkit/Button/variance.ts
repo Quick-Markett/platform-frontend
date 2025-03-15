@@ -5,7 +5,7 @@ export const buttonVariants = cva(
     'max-w-fit',
     'rounded-sm',
     'px-6',
-    'py-2',
+    'py-2.5',
     'w-full',
     'tracking-wide',
     'transition-all',
@@ -39,6 +39,7 @@ export const buttonVariants = cva(
           'hover:shadow',
           'hover:brightness-[110%]'
         ],
+        tertiary: ['text-slate-50', 'bg-green-600', 'hover:brightness-[115%]'],
         danger: [
           'text-neutral-50',
           'bg-gradient-to-tr',

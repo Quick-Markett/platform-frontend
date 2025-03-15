@@ -22,7 +22,7 @@ export class SsoAuth {
         payload
       )
 
-      if (status !== 200) {
+      if (status !== 201) {
         throw new Error(data.message)
       }
 

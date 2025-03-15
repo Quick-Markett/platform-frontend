@@ -23,15 +23,13 @@ export const googleOptions = {
 
         const { data: createdUserData } = await auth.google.createUser({
           email,
-          firstname: given_name,
-          lastname: family_name,
+          name: `${given_name} ${family_name}`,
           profile_picture: picture,
           google_id: googleId,
           address: '',
           city: '',
           password: '',
-          state: '',
-          zip_code: ''
+          state: ''
         })
 
         if (createdUserData) {
