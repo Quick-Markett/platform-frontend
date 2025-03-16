@@ -18,13 +18,13 @@ export async function generateMetadata({ params }: DynamicMarketPageProps) {
   })
 }
 
-export async function generateStaticParams() {
-  const { data: markets } = await instanceMotor.markets.getAllMarkets()
+// export async function generateStaticParams() {
+//   const { data: markets } = await instanceMotor.markets.getAllMarkets()
 
-  return markets.map(({ slug }) => ({
-    slug
-  }))
-}
+//   return markets.map(({ slug }) => ({
+//     slug
+//   }))
+// }
 
 const Page = async ({ params }: DynamicMarketPageProps) => {
   const { slug } = await params
