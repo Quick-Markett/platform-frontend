@@ -1,5 +1,5 @@
-import { Footer } from '@/components/common/Footer'
-import { Navbar } from '@/components/common/Navbar'
+import { NextPage } from 'next'
+
 import { WelcomeBar } from '@/components/common/WelcomeBar'
 import { instanceMotor } from '@/instances/instanceMotor'
 import { getMetaData } from '@/utils/seo/getMetaData'
@@ -18,15 +18,15 @@ export async function generateMetadata({ params }: DynamicMarketPageProps) {
   })
 }
 
-export async function generateStaticParams() {
-  const { data: markets } = await instanceMotor.markets.getAllMarkets()
+// export async function generateStaticParams() {
+//   const { data: markets } = await instanceMotor.markets.getAllMarkets()
 
-  return markets.map(({ slug }) => ({
-    slug
-  }))
-}
+//   return markets.map(({ slug }) => ({
+//     slug
+//   }))
+// }
 
-const Page = async ({ params }: DynamicMarketPageProps) => {
+const Page: NextPage = async ({ params }: DynamicMarketPageProps) => {
   const { slug } = await params
   const formattedSlug = Number(slug)
 
@@ -37,12 +37,10 @@ const Page = async ({ params }: DynamicMarketPageProps) => {
 
   return (
     <>
-      <Navbar />
       <WelcomeBar />
       <main>
         <Header market={market} />
       </main>
-      <Footer />
     </>
   )
 }

@@ -1,16 +1,14 @@
-'use client'
-
 import Image from 'next/image'
-import { useState } from 'react'
 
-import { FavouriteFill } from '@/assets/common/FavouriteFill'
-import { FavouriteOutline } from '@/assets/common/FavouriteOutline'
 import { Container } from '@/components/toolkit/Container'
+import { getUserSession } from '@/utils/auth/getUserSession'
 
+import { FavouriteMarket } from './FavouriteMarket'
+import { MarketActions } from './MarketActions'
 import { HeaderProps } from './types'
 
-export const Header: React.FC<HeaderProps> = ({ market }) => {
-  const [isMarketFavourite, setIsMarketFavourite] = useState<boolean>(false)
+export const Header: React.FC<HeaderProps> = async ({ market }) => {
+  const user = await getUserSession()
 
   return (
     <Container
@@ -48,23 +46,7 @@ export const Header: React.FC<HeaderProps> = ({ market }) => {
             </p>
           </article>
         </div>
-        <div className="flex w-full items-center justify-end gap-4">
-          {isMarketFavourite ? (
-            <button
-              className="animate__animated animate__fadeIn animate__fast w-auto"
-              onClick={() => setIsMarketFavourite(false)}
-            >
-              <FavouriteFill className="fill-slate-700 text-slate-700" />
-            </button>
-          ) : (
-            <button
-              className="animate__animated animate__fadeIn animate__fast w-auto"
-              onClick={() => setIsMarketFavourite(true)}
-            >
-              <FavouriteOutline />
-            </button>
-          )}
-        </div>
+        {user.id === market.owner?.id ? <MarketActions /> : <FavouriteMarket />}
       </div>
     </Container>
   )

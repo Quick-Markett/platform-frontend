@@ -1,12 +1,9 @@
 import { NextPage } from 'next'
 
-import { Footer } from '@/components/common/Footer'
-import { Navbar } from '@/components/common/Navbar'
 import { WelcomeBar } from '@/components/common/WelcomeBar'
 import { getMetaData } from '@/utils/seo/getMetaData'
 
-import { MarketOptions } from './components/MarketOptions'
-import { Offers } from './components/Offers'
+import { FormStepper } from './components/FormStepper'
 
 export async function generateMetadata() {
   return getMetaData({
@@ -20,13 +17,10 @@ export async function generateMetadata() {
 const Page: NextPage = async () => {
   return (
     <>
-      <Navbar />
       <WelcomeBar />
-      <main>
-        <Offers />
-        <MarketOptions />
+      <main className="min-h-[62vh]">
+        <FormStepper />
       </main>
-      <Footer />
     </>
   )
 }

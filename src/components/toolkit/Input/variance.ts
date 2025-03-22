@@ -7,7 +7,9 @@ export const inputVariants = cva(
     'text-sm',
     'ring-0',
     'outline-none',
-    'duration-default'
+    'duration-default',
+    'disabled:bg-neutral-100',
+    'disabled:cursor-not-allowed'
   ],
   {
     variants: {

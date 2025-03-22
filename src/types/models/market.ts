@@ -1,3 +1,5 @@
+import { User } from './user'
+
 export interface Market {
   address: string
   city: string
@@ -12,6 +14,8 @@ export interface Market {
   is_active: boolean
   logo_url: string
   name: string
+  owner?: User
+  owner_id: number
   phone_number: string
   slug: string
   state: string
