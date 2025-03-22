@@ -4,27 +4,46 @@ import { useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
+import { UploadButton } from '@/components/common/UploadButton'
 import { Button } from '@/components/toolkit/Button'
 import { InputField } from '@/components/toolkit/Fields/InputField'
 import { useUserSession } from '@/hooks/useUserSession'
 import { instanceMotor } from '@/instances/instanceMotor'
 import { tryCatch } from '@/utils/helpers/tryCatch'
+import { uploadImage } from '@/utils/helpers/uploadImage'
 import { zodResolver } from '@hookform/resolvers/zod'
 
+import { MediaIcon } from '../../icons/Media'
 import { registerMarketSchema } from './schema'
-import { AddressData, RegisterMarketFormInputs } from './types'
+import { AddressData, RegisterMarketFormInputs, SecondStepProps } from './types'
 
-export const SecondStep: React.FC = () => {
-  const { user } = useUserSession()
+export const SecondStep: React.FC<SecondStepProps> = ({ setCurrentStep }) => {
+  const [isUploadLoading, setIsUploadLoading] = useState<boolean>(false)
+  const [logo, setLogo] = useState<string>('')
   const [addressData, setAddressData] = useState<AddressData | null>(null)
+
+  const { user } = useUserSession()
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { isValidating, isSubmitSuccessful, isSubmitting }
   } = useForm<RegisterMarketFormInputs>({
     resolver: zodResolver(registerMarketSchema())
   })
+
+  const handleUploadImage = async (path: string) => {
+    try {
+      setIsUploadLoading(true)
+      const imagePath = await uploadImage({ imagePath: path })
+      setLogo(imagePath.url)
+    } catch (uploadImageError) {
+      console.error('ERROR! An error occurred while adding the image')
+    } finally {
+      setIsUploadLoading(false)
+    }
+  }
 
   const getMarketAddress = async (cep: string) => {
     const request = await tryCatch(
@@ -40,30 +59,57 @@ export const SecondStep: React.FC = () => {
 
     const requestData = await request.data.json()
 
-    setAddressData({ city: requestData.localidade, state: requestData.estado })
+    const newAddressData = {
+      city: requestData.localidade,
+      state: requestData.uf,
+      street: `${requestData.bairro}, ${requestData.logradouro}`
+    }
+
+    setAddressData(newAddressData)
+
+    setValue('state', newAddressData.state)
+    setValue('city', newAddressData.city)
+    setValue('address', newAddressData.street)
   }
 
   const onSubmit: SubmitHandler<RegisterMarketFormInputs> = async ({
     address,
+    city,
+    state,
     cep,
     email,
     marketName,
     marketDescription,
     phone_number
   }) => {
+    console.log(user)
+    const teste = {
+      owner_id: user.id,
+      description: marketDescription,
+      name: marketName,
+      zip_code: cep,
+      city,
+      state,
+      address,
+      email,
+      phone_number,
+      logo_url: logo
+    }
+    console.log(teste)
+
     try {
       await instanceMotor.markets.createMarket({
         payload: {
           owner_id: user.id,
-          city: addressData.city,
-          state: addressData.state,
           description: marketDescription,
           name: marketName,
           zip_code: cep,
+          city,
+          state,
           address,
           email,
           phone_number,
-          logo_url: ''
+          logo_url: logo
         }
       })
     } catch (submitMarketRegisterFormErr) {
@@ -71,6 +117,7 @@ export const SecondStep: React.FC = () => {
     }
   }
 
+  // TODO: Update Address part, this is not the final version because we need to improve the address database handling
   return !isSubmitSuccessful ? (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-8">
       <article className="flex w-full flex-col gap-2">
@@ -97,54 +144,114 @@ export const SecondStep: React.FC = () => {
           <InputField
             id="marketDescription"
             label="Fale um pouco mais sobre o seu Mercado"
-            maxLength={40}
-            minLength={8}
+            maxLength={1200}
+            minLength={4}
             placeholder="Digite uma descrição para seu estabelecimento"
             spellCheck={false}
-            autoFocus
             {...register('marketDescription')}
             variant="secondary"
           />
           <InputField
             id="email"
             label="Email de Contato"
-            maxLength={40}
+            maxLength={60}
             minLength={8}
             placeholder="Digite um email de contato para seus clientes"
             spellCheck={false}
-            autoFocus
             {...register('email')}
             variant="secondary"
           />
           <InputField
             id="phone_number"
             label="Telefone de contato"
-            maxLength={40}
+            maxLength={14}
             minLength={8}
             placeholder="Digite um telefone de contato para seus clientes"
             spellCheck={false}
-            autoFocus
             {...register('phone_number')}
             variant="secondary"
           />
-          <InputField
-            onChange={async e => {
-              if (e.target.value.length === 8) {
-                await getMarketAddress(e.target.value)
+          <article className="mb-4 mt-8 flex flex-col items-center gap-4">
+            <MediaIcon />
+            <p className="text-center text-sm lg:text-base">
+              Insira a logo do seu mercado
+            </p>
+            <UploadButton
+              uploadImageAction={async (path: string) =>
+                await handleUploadImage(path)
               }
-            }}
+              isLoading={isUploadLoading}
+              setImagePath={setLogo}
+            >
+              Escolher imagem do computador
+            </UploadButton>
+          </article>
+
+          {/* TODO: Add feedback to show the user when the image has been loaded
+          (perhaps displaying it beside the input) */}
+
+          <InputField
+            {...register('cep', {
+              onChange: e => {
+                toast.info(e.target.value.length)
+                if (e.target.value.length === 8) {
+                  getMarketAddress(e.target.value)
+                }
+              }
+            })}
             id="cep"
             label="CEP"
             maxLength={8}
             minLength={8}
             placeholder="Digite aqui o CEP do seu estabelecimento"
             spellCheck={false}
-            autoFocus
-            {...register('cep')}
+            type="number"
+            variant="secondary"
+          />
+          <div className="flex w-full flex-col gap-8 lg:flex-row lg:justify-between">
+            <div className="w-full">
+              <InputField
+                className="min-w-full"
+                disabled={!addressData}
+                id="state"
+                label="Estado (UF)"
+                maxLength={40}
+                minLength={8}
+                placeholder="Informe o CEP para preencher esse campo"
+                spellCheck={false}
+                {...register('state')}
+                variant="secondary"
+              />
+            </div>
+            <div className="w-full">
+              <InputField
+                className="min-w-full"
+                disabled={!addressData}
+                id="city"
+                label="Cidade"
+                maxLength={40}
+                minLength={8}
+                placeholder="Informe o CEP para preencher esse campo"
+                spellCheck={false}
+                {...register('city')}
+                variant="secondary"
+              />
+            </div>
+          </div>
+          <InputField
+            className="min-w-full"
+            disabled={!addressData}
+            id="street"
+            label="Rua"
+            maxLength={40}
+            minLength={8}
+            placeholder="Informe o CEP para preencher esse campo"
+            spellCheck={false}
+            {...register('address')}
             variant="secondary"
           />
           <Button
-            className="mt-4 min-w-full md:text-sm"
+            className="mt-8 min-w-full md:text-sm"
             isLoading={isSubmitting || isValidating}
             type="submit"
             variant="primary"

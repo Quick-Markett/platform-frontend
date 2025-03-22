@@ -5,6 +5,7 @@ import { useState } from 'react'
 import { Container } from '@/components/toolkit/Container'
 
 import { FirstStep } from './FirstStep'
+import { SecondStep } from './SecondStep'
 
 export const FormStepper: React.FC = () => {
   const [currentStep, setCurrentStep] = useState<number>(1)
@@ -16,7 +17,11 @@ export const FormStepper: React.FC = () => {
       data-cid="form-stepper"
       wrapperClassName="bg-white py-12 lg:py-16"
     >
-      {currentStep === 1 ? <FirstStep setCurrentStep={setCurrentStep} /> : null}
+      {currentStep === 1 ? (
+        <FirstStep setCurrentStep={setCurrentStep} />
+      ) : (
+        <SecondStep setCurrentStep={setCurrentStep} />
+      )}
     </Container>
   )
 }
