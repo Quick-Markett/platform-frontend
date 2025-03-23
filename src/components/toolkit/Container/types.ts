@@ -4,7 +4,8 @@ type ClassName = HTMLProps<HTMLElement>['className']
 
 export interface ContainerProps
   extends PropsWithChildren,
-    HTMLProps<HTMLElement> {
+    HTMLProps<HTMLElement>,
+    Omit<HTMLProps<HTMLElement>, 'as'> {
   as?: keyof JSX.IntrinsicElements
   className?: ClassName
   container?: 'fluid' | 'fixed'
