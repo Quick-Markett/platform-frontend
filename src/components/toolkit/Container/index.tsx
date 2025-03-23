@@ -1,4 +1,4 @@
-import { createElement } from 'react'
+import React, { createElement } from 'react'
 
 import { ContainerProps } from './types'
 
@@ -12,8 +12,11 @@ export const Container: React.FC<ContainerProps> = ({
   as = 'div',
   ...props
 }) => {
+  const isValidElement = (tag): tag is keyof React.JSX.IntrinsicElements =>
+    typeof tag === 'string'
+
   return createElement(
-    as,
+    isValidElement(as) ? as : 'div',
     {
       className: `scroll-mt-[100px] ${disableSidePadding ? '' : 'px-4'} ${wrapperClassName}`,
       'data-cid': dataCid,

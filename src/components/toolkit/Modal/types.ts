@@ -1,7 +1,7 @@
-import { Dispatch, SetStateAction } from 'react'
+import React, { Dispatch, SetStateAction } from 'react'
 
 export interface ModalProps {
-  children: JSX.Element
+  children: React.JSX.Element
   dismissible?: boolean
   fullScreen?: boolean
   hideCloseButton?: boolean
