@@ -9,6 +9,7 @@ import { Button } from '@/components/toolkit/Button'
 import { InputField } from '@/components/toolkit/Fields/InputField'
 import { useUserSession } from '@/hooks/useUserSession'
 import { instanceMotor } from '@/instances/instanceMotor'
+import { convertToSlug } from '@/utils/helpers/convertToSlug'
 import { tryCatch } from '@/utils/helpers/tryCatch'
 import { uploadImage } from '@/utils/helpers/uploadImage'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -82,21 +83,6 @@ export const SecondStep: React.FC<SecondStepProps> = ({ setCurrentStep }) => {
     marketDescription,
     phone_number
   }) => {
-    console.log(user)
-    const teste = {
-      owner_id: user.id,
-      description: marketDescription,
-      name: marketName,
-      zip_code: cep,
-      city,
-      state,
-      address,
-      email,
-      phone_number,
-      logo_url: logo
-    }
-    console.log(teste)
-
     try {
       await instanceMotor.markets.createMarket({
         payload: {
@@ -109,7 +95,8 @@ export const SecondStep: React.FC<SecondStepProps> = ({ setCurrentStep }) => {
           address,
           email,
           phone_number,
-          logo_url: logo
+          logo_url: logo,
+          slug: convertToSlug({ text: marketName })
         }
       })
     } catch (submitMarketRegisterFormErr) {
@@ -262,6 +249,8 @@ export const SecondStep: React.FC<SecondStepProps> = ({ setCurrentStep }) => {
       </form>
     </div>
   ) : (
-    <div></div>
+    <div className="mx-auto flex w-full max-w-3xl flex-col gap-8">
+      FEEDBACK CONTA CRIADA
+    </div>
   )
 }

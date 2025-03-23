@@ -12,7 +12,7 @@ export const googleOptions = {
     if (!user) {
       try {
         const { data: userData, error } = await auth.google.loginUser({
-          email
+          googleId
         })
 
         if (userData && !error) {
@@ -35,7 +35,7 @@ export const googleOptions = {
         if (createdUserData) {
           const { data: loginData, error: loginError } =
             await auth.google.loginUser({
-              email
+              googleId
             })
 
           if (loginData && !loginError) {

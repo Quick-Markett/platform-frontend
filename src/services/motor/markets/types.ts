@@ -21,6 +21,7 @@ export interface CreateMarketPayload {
     | 'state'
     | 'zip_code'
     | 'owner_id'
+    | 'slug'
   >
 }
 

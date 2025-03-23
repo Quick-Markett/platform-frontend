@@ -1,14 +1,15 @@
+@use "./react-code-input.scss";
+@use "./react-international-phone.scss";
+
+@use 'swiper/css';
+@use 'swiper/css/pagination';
+@use 'swiper/css/navigation';
+
+@import "animate.css";
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
-@import 'swiper/css';
-@import 'swiper/css/pagination';
-@import 'swiper/css/navigation';
-
-@import "./react-code-input.scss";
-@import "./react-international-phone.scss";
-@import "animate.css";
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
