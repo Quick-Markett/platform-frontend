@@ -5,6 +5,7 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  trailingSlash: true,
   sassOptions: {
     includePaths: [path.join(__dirname, 'styles')]
   },

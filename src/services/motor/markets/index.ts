@@ -90,9 +90,12 @@ export class Markets {
     payload
   }: CreateMarketPayload): Promise<ServiceRequestResponse<Market>> => {
     try {
-      const { data, status } = await this.instance.post(`/markets`, payload)
+      const { data, status } = await this.instance.post(
+        `http://localhost:3030/markets`,
+        payload
+      )
 
-      if (status !== 200) {
+      if (status !== 201) {
         throw new Error(data.message)
       }
 

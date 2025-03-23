@@ -20,6 +20,8 @@ export interface CreateMarketPayload {
     | 'phone_number'
     | 'state'
     | 'zip_code'
+    | 'owner_id'
+    | 'slug'
   >
 }
 

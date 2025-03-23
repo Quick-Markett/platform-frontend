@@ -14,7 +14,7 @@ export interface CreateUserData
   > {}
 
 export interface LoginUserData {
-  email: string
+  googleId: string
 }
 
 export interface UpdateUserData {

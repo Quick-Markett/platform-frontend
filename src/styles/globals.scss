@@ -1,6 +1,11 @@
+@use "./react-code-input.scss";
+@use "./react-international-phone.scss";
+
 @use 'swiper/css';
 @use 'swiper/css/pagination';
 @use 'swiper/css/navigation';
+
+@import "animate.css";
 
 @tailwind base;
 @tailwind components;
@@ -8,12 +13,14 @@
 
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
 
-@import "animate.css";
-
 html {
   scroll-behavior: smooth !important;
 }
 
 body {
   @apply font-light box-border text-neutral-700;
+}
+
+.powered-by-image {
+  display: none;
 }
