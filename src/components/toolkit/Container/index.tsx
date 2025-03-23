@@ -12,7 +12,7 @@ export const Container: React.FC<ContainerProps> = ({
   as = 'div',
   ...props
 }) => {
-  const isValidElement = (tag): tag is keyof JSX.IntrinsicElements =>
+  const isValidElement = (tag): tag is keyof React.JSX.IntrinsicElements =>
     typeof tag === 'string'
 
   return createElement(
