@@ -1,4 +1,4 @@
-import { HTMLProps, PropsWithChildren } from 'react'
+import React, { HTMLProps, PropsWithChildren } from 'react'
 
 type ClassName = HTMLProps<HTMLElement>['className']
 
@@ -6,7 +6,7 @@ export interface ContainerProps
   extends PropsWithChildren,
     HTMLProps<HTMLElement>,
     Omit<HTMLProps<HTMLElement>, 'as'> {
-  as?: keyof JSX.IntrinsicElements
+  as?: keyof React.JSX.IntrinsicElements
   className?: ClassName
   container?: 'fluid' | 'fixed'
   'data-cid': string
