@@ -7,10 +7,11 @@ import { FormStepper } from './components/FormStepper'
 
 export async function generateMetadata() {
   return getMetaData({
-    title: '',
-    description: '',
+    title: 'Crie e gerencie seu mercado | [Nome da Plataforma]',
+    description:
+      'Cadastre seu mercado na nossa plataforma e comece a adicionar produtos, gerenciar pedidos e alcançar mais clientes de forma simples e eficiente.',
     image: '',
-    url: '/mercados'
+    url: '/mercados/cadastre-seu-mercado'
   })
 }
 

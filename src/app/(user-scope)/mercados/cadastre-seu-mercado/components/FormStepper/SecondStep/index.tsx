@@ -5,8 +5,10 @@ import { SubmitHandler, useForm } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import { UploadButton } from '@/components/common/UploadButton'
+import { Anchor } from '@/components/toolkit/Anchor'
 import { Button } from '@/components/toolkit/Button'
 import { InputField } from '@/components/toolkit/Fields/InputField'
+import { PhoneNumber } from '@/components/toolkit/PhoneNumber'
 import { useUserSession } from '@/hooks/useUserSession'
 import { instanceMotor } from '@/instances/instanceMotor'
 import { convertToSlug } from '@/utils/helpers/convertToSlug'
@@ -15,6 +17,7 @@ import { uploadImage } from '@/utils/helpers/uploadImage'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import { MediaIcon } from '../../icons/Media'
+import { RegisterYourMarket } from '../../icons/RegisterYourMarket'
 import { registerMarketSchema } from './schema'
 import { AddressData, RegisterMarketFormInputs, SecondStepProps } from './types'
 
@@ -25,14 +28,16 @@ export const SecondStep: React.FC<SecondStepProps> = ({ setCurrentStep }) => {
 
   const { user } = useUserSession()
 
+  const formMethods = useForm<RegisterMarketFormInputs>({
+    resolver: zodResolver(registerMarketSchema())
+  })
+
   const {
     register,
     handleSubmit,
     setValue,
     formState: { isValidating, isSubmitSuccessful, isSubmitting }
-  } = useForm<RegisterMarketFormInputs>({
-    resolver: zodResolver(registerMarketSchema())
-  })
+  } = formMethods
 
   const handleUploadImage = async (path: string) => {
     try {
@@ -139,6 +144,7 @@ export const SecondStep: React.FC<SecondStepProps> = ({ setCurrentStep }) => {
             variant="secondary"
           />
           <InputField
+            className="mb-2"
             id="email"
             label="Email de Contato"
             maxLength={60}
@@ -148,11 +154,13 @@ export const SecondStep: React.FC<SecondStepProps> = ({ setCurrentStep }) => {
             {...register('email')}
             variant="secondary"
           />
-          <InputField
+          <PhoneNumber
+            formMethods={formMethods}
             id="phone_number"
             label="Telefone de contato"
             maxLength={14}
             minLength={8}
+            name="phone_number"
             placeholder="Digite um telefone de contato para seus clientes"
             spellCheck={false}
             {...register('phone_number')}
@@ -195,7 +203,7 @@ export const SecondStep: React.FC<SecondStepProps> = ({ setCurrentStep }) => {
             type="number"
             variant="secondary"
           />
-          <div className="flex w-full flex-col gap-8 lg:flex-row lg:justify-between">
+          <div className="flex w-full flex-col gap-2 lg:flex-row lg:justify-between lg:gap-8">
             <div className="w-full">
               <InputField
                 className="min-w-full"
@@ -250,7 +258,29 @@ export const SecondStep: React.FC<SecondStepProps> = ({ setCurrentStep }) => {
     </div>
   ) : (
     <div className="mx-auto flex w-full max-w-3xl flex-col gap-8">
-      FEEDBACK CONTA CRIADA
+      <figure className="mx-auto flex w-full max-w-md items-center justify-center">
+        <RegisterYourMarket />
+      </figure>
+      <article className="flex w-full flex-col items-center gap-2">
+        <h2 className="text-center text-2xl font-semibold lg:text-3xl">
+          Prontinho! Seu mercado foi adicionado
+        </h2>
+        <p className="text-center text-sm text-neutral-500 lg:text-base">
+          Seu mercado foi adicionado com sucesso! Agora, você pode
+          personalizá-lo do seu jeito. Edite as informações, adicione produtos,
+          configure detalhes e comece <br className="hideden lg:block" /> a
+          oferecer a melhor experiência para seus clientes. Tudo pronto para
+          você gerenciar seu mercado com facilidade!
+        </p>
+        <div className="mx-auto mt-8 flex w-full items-center justify-center gap-8">
+          <Button onClick={() => setCurrentStep(2)}>
+            Quero ver como ele ficou
+          </Button>
+          <Anchor href="/mercados" variant="primaryOutline">
+            Voltar à home
+          </Anchor>
+        </div>
+      </article>
     </div>
   )
 }

@@ -1,4 +1,5 @@
 import { NextPage } from 'next'
+import { notFound } from 'next/navigation'
 
 import { WelcomeBar } from '@/components/common/WelcomeBar'
 import { instanceMotor } from '@/instances/instanceMotor'
@@ -10,10 +11,18 @@ import { DynamicMarketPageProps } from './types'
 export async function generateMetadata({ params }: DynamicMarketPageProps) {
   const { slug } = await params
 
+  const { data: market } = await instanceMotor.markets.getMarketBySlug({
+    slug
+  })
+
+  if (!market) {
+    notFound()
+  }
+
   return getMetaData({
-    title: '',
-    description: '',
-    image: '',
+    title: market.name,
+    description: market.description,
+    image: market.logo_url,
     url: `/mercados/${slug}`
   })
 }
@@ -28,11 +37,9 @@ export async function generateMetadata({ params }: DynamicMarketPageProps) {
 
 const Page: NextPage = async ({ params }: DynamicMarketPageProps) => {
   const { slug } = await params
-  const formattedSlug = Number(slug)
 
-  // TODO: Replace "getMarketById" by "getMarketBySlug"
-  const { data: market } = await instanceMotor.markets.getMarketById({
-    marketId: formattedSlug
+  const { data: market } = await instanceMotor.markets.getMarketBySlug({
+    slug
   })
 
   return (
