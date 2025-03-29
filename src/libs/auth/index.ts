@@ -10,9 +10,7 @@ import { googleOptions } from './googleOptions'
 
 export const authOptions: AuthOptions = {
   providers: [
-    // @ts-expect-error
     CredentialsProvider(credentialsOptions),
-    // @ts-expect-error
     GoogleProvider(googleOptions)
   ],
   callbacks: {
@@ -39,12 +37,12 @@ export const authOptions: AuthOptions = {
       const { session, token: jwt } = props
 
       const { userData } = jwt
-      session.user = userData
+      session.user = userData as User
 
       return Promise.resolve(session)
     },
     redirect: async ({ url, baseUrl }) => {
-      return url
+      return url.startsWith(baseUrl) ? url : baseUrl
     }
   },
   pages: {

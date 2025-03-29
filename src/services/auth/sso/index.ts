@@ -1,8 +1,8 @@
 import { AxiosInstance } from 'axios'
-import { compare } from 'bcryptjs'
 
 import { User } from '@/types/models/user'
 import { ServiceRequestResponse } from '@/types/services/serviceRequestResponse'
+import { generateSsoToken } from '@/utils/auth/generateSsoToken'
 
 import { CreateUserData, LoginUserData } from './types'
 
@@ -17,16 +17,27 @@ export class SsoAuth {
     payload: CreateUserData
   ): Promise<ServiceRequestResponse<User>> => {
     try {
+      const ssoToken = await generateSsoToken(payload)
+
       const { data, status } = await this.instance.post(
         `/users/sso/create-user`,
-        payload
+        {
+          token: ssoToken
+        }
       )
 
       if (status !== 201) {
         throw new Error(data.message)
       }
 
-      return data
+      const { token, ...user } = data
+
+      return {
+        data: {
+          ...user,
+          token
+        }
+      }
     } catch (err) {
       console.error({
         createUserErrorMessage: err.message
@@ -42,24 +53,27 @@ export class SsoAuth {
     payload: LoginUserData
   ): Promise<ServiceRequestResponse<User>> => {
     try {
-      const { data, status } = await this.instance.get(
-        `/users/sso/login-user/${payload.email}`
+      const ssoToken = await generateSsoToken(payload)
+
+      const { data, status } = await this.instance.post(
+        `/users/sso/login-user`,
+        {
+          token: ssoToken
+        }
       )
 
       if (status !== 200) {
         throw new Error(data.message)
       }
 
-      const isValidPassword = await compare(
-        payload.password,
-        data.data.password
-      )
+      const { token, ...user } = data
 
-      if (!isValidPassword) {
-        throw new Error('Invalid Password')
+      return {
+        data: {
+          ...user,
+          token
+        }
       }
-
-      return data
     } catch (err) {
       console.error({
         loginUserErrorMessage: err.message
