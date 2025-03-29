@@ -1,4 +1,6 @@
-export const NAVIGATION_LIST = [
+import { NavigationItem } from './NavigationItem/types'
+
+export const NAVIGATION_LIST: NavigationItem[] = [
   {
     title: 'Informações do Mercado',
     items: [

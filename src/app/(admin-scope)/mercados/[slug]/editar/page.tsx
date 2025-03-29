@@ -5,6 +5,7 @@ import { instanceMotor } from '@/instances/instanceMotor'
 import { getMetaData } from '@/utils/seo/getMetaData'
 
 import { DynamicMarketPageProps } from '../../../../(user-scope)/mercados/[slug]/types'
+import { AdminTabs } from './components/AdminTabs'
 import { Menu } from './components/Menu'
 
 export async function generateMetadata({ params }: DynamicMarketPageProps) {
@@ -35,9 +36,9 @@ const Page: NextPage = async ({ params }: DynamicMarketPageProps) => {
 
   return (
     <>
-      <main className="relative pt-28">
+      <main className="relative pb-12 pt-8 lg:pb-16">
         <Menu />
-        {/* <p>{JSON.stringify(market)}</p> */}
+        <AdminTabs market={market} />
       </main>
     </>
   )

@@ -11,7 +11,7 @@ export const HamburgerButton: React.FC<HamburgerButtonProps> = ({
 
   return (
     <button
-      className="duration-default group flex flex-col items-center justify-center rounded-sm p-2"
+      className="group relative z-50 flex flex-col items-center justify-center rounded-sm p-2 duration-default"
       onClick={onClick}
     >
       <div

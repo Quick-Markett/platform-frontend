@@ -1,12 +1,14 @@
+import { AdminTabs } from '@/contexts/AdminProvider/types'
+
 export interface NavigationItemProps {
-  copy: {
-    title: string
-    items: {
-      id: string
-      label: string
-    }[]
-  }
-  currentSelectedItem: string
+  copy: NavigationItem
   handleToggleSideMenu: () => void
-  setCurrentSelectedItem: (arg: string) => void
+}
+
+export interface NavigationItem {
+  items: {
+    id: AdminTabs
+    label: string
+  }[]
+  title: string
 }

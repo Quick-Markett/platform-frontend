@@ -11,14 +11,13 @@ import { NavigationItem } from './NavigationItem'
 
 export const Menu: React.FC = () => {
   const [isOpen, setIsOpen] = useState<boolean>(false)
-  const [currentSelectedItem, setCurrentSelectedItem] = useState<string>('')
 
   const handleToggleSideMenu = () => {
     setIsOpen(isOpen => !isOpen)
   }
 
   return (
-    <div className="absolute inset-0 flex items-center gap-4 px-8 py-4">
+    <div className="absolute inset-0 flex items-start gap-4 px-8 py-8">
       <HamburgerButton
         isOpen={isOpen}
         onClick={handleToggleSideMenu}
@@ -29,10 +28,8 @@ export const Menu: React.FC = () => {
           {NAVIGATION_LIST.map((navigationItem, index) => (
             <NavigationItem
               copy={navigationItem}
-              currentSelectedItem={currentSelectedItem}
               handleToggleSideMenu={handleToggleSideMenu}
               key={`${navigationItem.title}-${index}`}
-              setCurrentSelectedItem={setCurrentSelectedItem}
             />
           ))}
           <Anchor

@@ -2,16 +2,18 @@
 
 import { useState } from 'react'
 
+import { useAdminContext } from '@/contexts/AdminProvider'
+
 import { DropdownArrow } from '../icons/DropdownArrow'
 import { NavigationItemProps } from './types'
 
 export const NavigationItem: React.FC<NavigationItemProps> = ({
   copy,
-  setCurrentSelectedItem,
-  currentSelectedItem,
   handleToggleSideMenu
 }) => {
   const [isQuestionOpen, setIsQuestionOpen] = useState<boolean>(false)
+
+  const { selectedTab, setSelectedTab } = useAdminContext()
 
   return (
     <button
@@ -20,7 +22,7 @@ export const NavigationItem: React.FC<NavigationItemProps> = ({
       <div
         className={`${
           isQuestionOpen ? 'mb-2' : 'mb-0'
-        } flex w-full items-center justify-between gap-8 border-b-2 border-neutral-200 pb-2 transition-all`}
+        } flex w-full items-center justify-between gap-8 border-b border-neutral-200 pb-2 transition-all`}
         onClick={() => setIsQuestionOpen(!isQuestionOpen)}
       >
         <p className="w-full text-left text-sm font-medium text-neutral-600 transition lg:text-base">
@@ -43,14 +45,14 @@ export const NavigationItem: React.FC<NavigationItemProps> = ({
           {copy.items.map(({ id, label }, index) => (
             <li
               onClick={() => {
-                setCurrentSelectedItem(id)
+                setSelectedTab(id)
                 handleToggleSideMenu()
               }}
               className="w-full"
               key={`${label}-${index}`}
             >
               <div
-                className={`flex w-full border-neutral-100 py-2 pl-2 transition-all duration-300 ${currentSelectedItem === id ? 'border border-yellow-500 bg-yellow-50 text-yellow-700' : 'border-b bg-transparent text-neutral-600'}`}
+                className={`flex w-full border-neutral-100 py-2 pl-2 transition-all duration-300 ${selectedTab === id ? 'border border-yellow-500 bg-yellow-50 text-yellow-700' : 'border-b bg-transparent text-neutral-600'}`}
               >
                 {label}
               </div>
