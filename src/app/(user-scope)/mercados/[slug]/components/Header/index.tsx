@@ -46,7 +46,11 @@ export const Header: React.FC<HeaderProps> = async ({ market }) => {
             </p>
           </article>
         </div>
-        {user.id === market.owner?.id ? <MarketActions /> : <FavouriteMarket />}
+        {user.id === market.owner?.id ? (
+          <MarketActions market={market} />
+        ) : (
+          <FavouriteMarket />
+        )}
       </div>
     </Container>
   )

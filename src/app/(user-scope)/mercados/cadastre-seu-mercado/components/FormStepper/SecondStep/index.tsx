@@ -104,6 +104,9 @@ export const SecondStep: React.FC<SecondStepProps> = ({ setCurrentStep }) => {
           slug: convertToSlug({ text: marketName })
         }
       })
+
+      // TODO: Add new validation to handle with unique emails errors
+      // @higor
     } catch (submitMarketRegisterFormErr) {
       console.error(submitMarketRegisterFormErr)
     }

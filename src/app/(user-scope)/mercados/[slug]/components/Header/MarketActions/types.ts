@@ -1,5 +1,5 @@
 import { Market } from '@/types/models/market'
 
-export interface MarketCardProps {
+export interface MarketActionsProps {
   market: Market
 }
