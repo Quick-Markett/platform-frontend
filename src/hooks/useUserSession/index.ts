@@ -12,7 +12,7 @@ export const useUserSession = (): {
   const { data, update } = useSession() ?? {}
 
   return {
-    user: data?.user,
+    user: data?.user as User,
     token: data?.user?.token,
     update
   }

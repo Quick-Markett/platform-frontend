@@ -45,8 +45,6 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
     password,
     confirmPassword
   }: OnSubmitPayload) => {
-    console.log('teste')
-
     if (password !== confirmPassword) {
       toast.info('The passwords are diferent!')
       return new Error({
@@ -64,6 +62,7 @@ export const SignUpForm: React.FC<SignUpFormProps> = ({
 
     try {
       const response = await signIn('credentials', {
+        name,
         email,
         password,
         redirect: true,

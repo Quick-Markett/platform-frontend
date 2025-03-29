@@ -11,5 +11,6 @@ export interface User {
   password: string
   profile_picture: string
   state: string
+  token?: string
   updated_at: string
 }

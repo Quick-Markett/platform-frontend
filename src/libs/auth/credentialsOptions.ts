@@ -1,7 +1,8 @@
 import { DEFAULT_USER_DATA } from '@/components/common/AuthForm/SignUpForm/data'
 import { auth } from '@/instances/instanceAuth'
-import { generateHash } from '@/utils/auth/generateHash'
 import { getUserSession } from '@/utils/auth/getUserSession'
+
+import { credentialsSchema } from './schemas'
 
 export const credentialsOptions = {
   id: 'credentials',
@@ -21,13 +22,20 @@ export const credentialsOptions = {
     }
   },
   async authorize(credentials) {
+    const parsedCredentials = credentialsSchema.safeParse(credentials)
+    if (!parsedCredentials.success) {
+      throw new Error('Credenciais inválidas')
+    }
+    const { email, password, name, action } = parsedCredentials.data
+
     const user = await getUserSession()
+    if (user && user.id) {
+      return { id: user.id, ...user }
+    }
 
     if (!user) {
       try {
-        if (credentials.action === 'signIn') {
-          const { email, password } = credentials
-
+        if (action === 'signIn') {
           const { data: userData, error } = await auth.sso.loginUser({
             email,
             password
@@ -40,16 +48,14 @@ export const credentialsOptions = {
           }
         }
 
-        if (credentials.action === 'signUp') {
-          const { name, email, password } = credentials
-
-          const hashedPassword = await generateHash({ password })
+        if (action === 'signUp') {
+          const { password } = credentials
 
           const { data: createdUserData } = await auth.sso.createUser({
             ...DEFAULT_USER_DATA,
             email,
             name,
-            password: hashedPassword
+            password
           })
 
           if (createdUserData) {
