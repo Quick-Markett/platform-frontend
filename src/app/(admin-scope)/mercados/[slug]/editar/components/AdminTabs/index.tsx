@@ -6,7 +6,7 @@ import { useAdminContext } from '@/contexts/AdminProvider'
 import { ADMIN_TABS } from './data'
 import { AdminTabsProps } from './types'
 
-export const AdminTabs: React.FC<AdminTabsProps> = ({ market }) => {
+export const AdminTabs: React.FC<AdminTabsProps> = () => {
   const { selectedTab } = useAdminContext()
 
   return (
@@ -14,7 +14,7 @@ export const AdminTabs: React.FC<AdminTabsProps> = ({ market }) => {
       as="section"
       className="flex w-full flex-col gap-6 lg:gap-12"
       data-cid="admin-tab"
-      wrapperClassName="bg-white pt-12 lg:pt-20 relative z-40"
+      wrapperClassName="pt-12 lg:pt-20 relative z-40"
     >
       {ADMIN_TABS[selectedTab]}
     </Container>

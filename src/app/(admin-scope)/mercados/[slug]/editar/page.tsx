@@ -1,6 +1,7 @@
 import { NextPage } from 'next'
 import { notFound } from 'next/navigation'
 
+import { AdminContextProvider } from '@/contexts/AdminProvider'
 import { instanceMotor } from '@/instances/instanceMotor'
 import { getMetaData } from '@/utils/seo/getMetaData'
 
@@ -35,12 +36,12 @@ const Page: NextPage = async ({ params }: DynamicMarketPageProps) => {
   })
 
   return (
-    <>
-      <main className="relative pb-12 pt-8 lg:pb-16">
+    <AdminContextProvider market={market}>
+      <main className="relative min-h-[70vh] bg-neutral-50 pb-12 pt-8 lg:pb-16">
         <Menu />
-        <AdminTabs market={market} />
+        <AdminTabs />
       </main>
-    </>
+    </AdminContextProvider>
   )
 }
 

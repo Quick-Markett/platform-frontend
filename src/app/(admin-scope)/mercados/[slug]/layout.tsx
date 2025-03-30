@@ -1,9 +1,7 @@
 import { PropsWithChildren } from 'react'
 
-import { AdminContextProvider } from '@/contexts/AdminProvider'
-
 const AdminScopeLayout: React.FC<PropsWithChildren> = async ({ children }) => {
-  return <AdminContextProvider>{children}</AdminContextProvider>
+  return <>{children}</>
 }
 
 export default AdminScopeLayout

@@ -17,14 +17,14 @@ export const Menu: React.FC = () => {
   }
 
   return (
-    <div className="absolute inset-0 flex items-start gap-4 px-8 py-8">
+    <div className="absolute inset-0 flex items-start gap-4 px-4 py-8">
       <HamburgerButton
         isOpen={isOpen}
         onClick={handleToggleSideMenu}
         variant="primary"
       />
       <Drawer isOpen={isOpen} setIsOpen={setIsOpen} fullScreenOnMobile>
-        <div className="flex flex-col pt-16 lg:px-6 lg:pt-16">
+        <div className="flex flex-col pt-16 lg:px-6 lg:pt-24">
           {NAVIGATION_LIST.map((navigationItem, index) => (
             <NavigationItem
               copy={navigationItem}
