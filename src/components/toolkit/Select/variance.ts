@@ -14,17 +14,18 @@ export const selectVariants = cva(
     'ease-in-out',
     'focus:outline-none',
     'disabled:text-gray-400',
+    'disabled:bg-neutral-100',
     'duration-300'
   ],
   {
     variants: {
       variant: {
-        primary: ['border', 'md:hover:bg-slate-100', 'bg-white'],
+        primary: ['border', 'md:hover:bg-neutral-100', 'bg-white'],
         secondary: [
           'border',
-          'border-slate-300',
-          'md:hover:border-slate-500',
-          'focus:border-slate-500',
+          'border-neutral-300',
+          'md:hover:border-neutral-500',
+          'focus:border-neutral-500',
           'bg-white'
         ]
       },

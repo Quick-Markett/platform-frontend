@@ -63,7 +63,7 @@ export class Categories {
       })
 
       return {
-        error: getMarketCategoriesErr.message
+        data: []
       }
     }
   }

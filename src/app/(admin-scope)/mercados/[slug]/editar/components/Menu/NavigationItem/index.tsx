@@ -1,0 +1,65 @@
+'use client'
+
+import { useState } from 'react'
+
+import { useAdminContext } from '@/contexts/AdminProvider'
+
+import { DropdownArrow } from '../icons/DropdownArrow'
+import { NavigationItemProps } from './types'
+
+export const NavigationItem: React.FC<NavigationItemProps> = ({
+  copy,
+  handleToggleSideMenu
+}) => {
+  const [isQuestionOpen, setIsQuestionOpen] = useState<boolean>(false)
+
+  const { selectedTab, setSelectedTab } = useAdminContext()
+
+  return (
+    <button
+      className={`flex w-full cursor-pointer flex-col justify-center rounded-sm p-3 duration-default lg:items-start lg:px-0 lg:py-4`}
+    >
+      <div
+        className={`${
+          isQuestionOpen ? 'mb-2' : 'mb-0'
+        } flex w-full items-center justify-between gap-8 border-b border-neutral-200 pb-2 transition-all`}
+        onClick={() => setIsQuestionOpen(!isQuestionOpen)}
+      >
+        <p className="w-full text-left text-sm font-medium text-neutral-600 transition lg:text-base">
+          {copy.title}
+        </p>
+
+        <figure className="ml-2">
+          <DropdownArrow
+            className={`w-4 text-neutral-500 transition-all duration-300 ease-in-out hover:text-neutral-700 ${
+              isQuestionOpen ? 'rotate-0' : '-rotate-90'
+            }`}
+          />
+        </figure>
+      </div>
+
+      <div
+        className={`w-full overflow-hidden text-left text-sm transition-all duration-default ease-in-out ${isQuestionOpen ? 'max-h-[300px]' : 'max-h-0'}`}
+      >
+        <ul className="flex w-full flex-col">
+          {copy.items.map(({ id, label }, index) => (
+            <li
+              onClick={() => {
+                setSelectedTab(id)
+                handleToggleSideMenu()
+              }}
+              className="w-full"
+              key={`${label}-${index}`}
+            >
+              <div
+                className={`flex w-full border-neutral-100 py-2 pl-2 transition-all duration-300 ${selectedTab === id ? 'border border-yellow-500 bg-yellow-50 text-yellow-700' : 'border-b bg-transparent text-neutral-600'}`}
+              >
+                {label}
+              </div>
+            </li>
+          ))}
+        </ul>
+      </div>
+    </button>
+  )
+}

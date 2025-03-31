@@ -1,10 +1,15 @@
+import { Anchor } from '@/components/toolkit/Anchor'
 import { formatCurrency } from '@/utils/getters/getFormattedCurrency'
 
 import { MarketCardProps } from './types'
 
 export const MarketCard: React.FC<MarketCardProps> = ({ market }) => {
   return (
-    <li className="flex w-full cursor-pointer items-center gap-3 rounded-sm border border-neutral-100 p-2 transition-all duration-300 hover:bg-neutral-50">
+    <Anchor
+      className="flex w-full cursor-pointer items-center gap-3 rounded-sm border border-neutral-100 p-2 transition-all duration-300 hover:bg-neutral-50"
+      href={`/mercados/${market.slug}`}
+      variant="custom"
+    >
       <figure className="h-12 w-12 rounded-sm bg-neutral-200 lg:h-20 lg:w-20" />
       <article className="w-full flex-1">
         <p className="text-base font-medium">{market.name}</p>
@@ -27,6 +32,6 @@ export const MarketCard: React.FC<MarketCardProps> = ({ market }) => {
           )}
         </div>
       </article>
-    </li>
+    </Anchor>
   )
 }

@@ -25,6 +25,20 @@ export interface CreateMarketPayload {
   >
 }
 
-export interface UpdateMarketPayload extends GetMarketByIdPayload {}
+export interface UpdateMarketPayload {
+  marketId: number
+  payload: Pick<
+    Market,
+    | 'address'
+    | 'city'
+    | 'description'
+    | 'email'
+    | 'logo_url'
+    | 'phone_number'
+    | 'state'
+    | 'zip_code'
+    | 'owner_id'
+  >
+}
 
 export interface DeleteMarketPayload extends GetMarketByIdPayload {}

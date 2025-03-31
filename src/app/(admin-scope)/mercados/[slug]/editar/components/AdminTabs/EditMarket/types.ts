@@ -5,7 +5,6 @@ import { DefaultFormFields } from '@/constants/forms/default-forms-fields'
 export interface RegisterMarketFormInputs
   extends Pick<
     DefaultFormFields,
-    | 'marketName'
     | 'address'
     | 'cep'
     | 'city'

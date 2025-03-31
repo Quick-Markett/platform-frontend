@@ -112,11 +112,13 @@ export class Markets {
   }
 
   updateMarket = async ({
-    marketId
+    marketId,
+    payload
   }: UpdateMarketPayload): Promise<ServiceRequestResponse<void>> => {
     try {
       const { data, status } = await this.instance.put(
-        `/markets/${marketId.toString()}`
+        `/markets/${marketId.toString()}`,
+        payload
       )
 
       if (status !== 200) {
