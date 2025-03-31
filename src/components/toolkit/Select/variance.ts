@@ -14,6 +14,7 @@ export const selectVariants = cva(
     'ease-in-out',
     'focus:outline-none',
     'disabled:text-gray-400',
+    'disabled:bg-neutral-100',
     'duration-300'
   ],
   {

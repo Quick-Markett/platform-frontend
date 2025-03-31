@@ -1,17 +1,21 @@
 'use client'
 
-import { useState } from 'react'
-import { SubmitHandler, useForm } from 'react-hook-form'
+import { useEffect, useState } from 'react'
+import { SubmitHandler, useForm, useWatch } from 'react-hook-form'
 import { toast } from 'react-toastify'
 
 import { UploadButton } from '@/components/common/UploadButton'
 import { Anchor } from '@/components/toolkit/Anchor'
 import { Button } from '@/components/toolkit/Button'
 import { InputField } from '@/components/toolkit/Fields/InputField'
+import { SelectField } from '@/components/toolkit/Fields/SelectField'
 import { PhoneNumber } from '@/components/toolkit/PhoneNumber'
+import { BRAZILIAN_CITIES } from '@/constants/common/brazilian-cities'
+import { BRAZILIAN_STATES } from '@/constants/common/brazilian.states'
 import { useUserSession } from '@/hooks/useUserSession'
 import { instanceMotor } from '@/instances/instanceMotor'
 import { convertToSlug } from '@/utils/helpers/convertToSlug'
+import { formatCityName } from '@/utils/helpers/formatCityName'
 import { tryCatch } from '@/utils/helpers/tryCatch'
 import { uploadImage } from '@/utils/helpers/uploadImage'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -25,6 +29,7 @@ export const SecondStep: React.FC<SecondStepProps> = ({ setCurrentStep }) => {
   const [isUploadLoading, setIsUploadLoading] = useState<boolean>(false)
   const [logo, setLogo] = useState<string>('')
   const [addressData, setAddressData] = useState<AddressData | null>(null)
+  const [cities, setCities] = useState<{ label: string; value: string }[]>([])
 
   const { user } = useUserSession()
 
@@ -33,6 +38,7 @@ export const SecondStep: React.FC<SecondStepProps> = ({ setCurrentStep }) => {
   })
 
   const {
+    control,
     register,
     handleSubmit,
     setValue,
@@ -111,6 +117,26 @@ export const SecondStep: React.FC<SecondStepProps> = ({ setCurrentStep }) => {
       console.error(submitMarketRegisterFormErr)
     }
   }
+
+  const selectedUF = useWatch({
+    control,
+    name: 'state'
+  })
+
+  useEffect(() => {
+    const estadoSelecionado = BRAZILIAN_CITIES.estados.find(
+      estado => estado.sigla.toLowerCase() === selectedUF?.toLowerCase()
+    )
+
+    const formattedCities = estadoSelecionado
+      ? estadoSelecionado.cidades.map(city => ({
+          label: city,
+          value: formatCityName(city)
+        }))
+      : []
+
+    setCities(formattedCities)
+  }, [selectedUF])
 
   // TODO: Update Address part, this is not the final version because we need to improve the address database handling
   return !isSubmitSuccessful ? (
@@ -208,42 +234,51 @@ export const SecondStep: React.FC<SecondStepProps> = ({ setCurrentStep }) => {
           />
           <div className="flex w-full flex-col gap-2 lg:flex-row lg:justify-between lg:gap-8">
             <div className="w-full">
-              <InputField
+              <SelectField
+                placeholder={
+                  !addressData
+                    ? 'Informe o CEP para preencher esse campo'
+                    : addressData.city
+                }
                 className="min-w-full"
-                disabled={!addressData}
-                id="state"
-                label="Estado (UF)"
-                maxLength={40}
-                minLength={8}
-                placeholder="Informe o CEP para preencher esse campo"
-                spellCheck={false}
-                {...register('state')}
-                variant="secondary"
-              />
-            </div>
-            <div className="w-full">
-              <InputField
-                className="min-w-full"
-                disabled={!addressData}
                 id="city"
                 label="Cidade"
                 maxLength={40}
                 minLength={8}
-                placeholder="Informe o CEP para preencher esse campo"
+                name="city"
+                options={cities}
                 spellCheck={false}
                 {...register('city')}
+                variant="secondary"
+              />
+            </div>
+            <div className="w-full">
+              <SelectField
+                placeholder={
+                  !addressData
+                    ? 'Informe o CEP para preencher esse campo'
+                    : addressData.state
+                }
+                className="min-w-full"
+                id="state"
+                label="Estado (UF)"
+                maxLength={40}
+                minLength={8}
+                name="state"
+                options={BRAZILIAN_STATES}
+                spellCheck={false}
+                {...register('state')}
                 variant="secondary"
               />
             </div>
           </div>
           <InputField
             className="min-w-full"
-            disabled={!addressData}
             id="street"
             label="Rua"
             maxLength={40}
             minLength={8}
-            placeholder="Informe o CEP para preencher esse campo"
+            placeholder="Digite a rua do seu restaurante"
             spellCheck={false}
             {...register('address')}
             variant="secondary"
