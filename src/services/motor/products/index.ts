@@ -61,7 +61,7 @@ export class Products {
       })
 
       return {
-        error: getMarketProductsErr.message
+        data: []
       }
     }
   }

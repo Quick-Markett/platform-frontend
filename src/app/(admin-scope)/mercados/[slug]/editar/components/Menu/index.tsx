@@ -17,7 +17,7 @@ export const Menu: React.FC = () => {
   }
 
   return (
-    <div className="absolute inset-0 flex items-start gap-4 px-4 py-8">
+    <div className="absolute inset-0 flex items-start gap-4 px-4 py-4">
       <HamburgerButton
         isOpen={isOpen}
         onClick={handleToggleSideMenu}

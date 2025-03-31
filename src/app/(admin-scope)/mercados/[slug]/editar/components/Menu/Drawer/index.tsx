@@ -52,7 +52,7 @@ export const Drawer: React.FC<DrawerProps> = ({
         <div
           className={`drawer-toolkit fixed left-0 top-0 z-50 flex h-full min-w-96 flex-col gap-12 overflow-auto bg-white shadow-xl ${fullScreenOnMobile ? 'w-full lg:w-auto' : ''}`}
         >
-          <div className="absolute left-4 top-8">
+          <div className="absolute left-4 top-4">
             <button
               aria-label="close-modal"
               className="w-10 rounded-sm p-2 text-neutral-500 duration-default lg:hover:bg-neutral-100 lg:hover:text-neutral-500"
