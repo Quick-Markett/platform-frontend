@@ -148,10 +148,9 @@ export const EditMarket: React.FC = () => {
               minLength={8}
               placeholder="Digite o nome do seu estabelecimento"
               spellCheck={false}
+              variant="secondary"
               autoFocus
               disabled
-              {...register('marketName')}
-              variant="secondary"
             />
             <InputField
               defaultValue={marketData.description}

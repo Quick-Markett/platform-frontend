@@ -6,7 +6,6 @@ export interface RegisterMarketFormInputs {
   city: string
   email: string
   marketDescription: string
-  marketName: string
   phone_number: string
   state: string
 }

@@ -4,7 +4,6 @@ import { normalEmailValidation } from '@/utils/helpers/normalEmailValidation'
 
 export const updateMarketSchema = () =>
   z.object({
-    marketName: z.string().nonempty('Esse campo é obrigatório.'),
     marketDescription: z.string().nonempty('Esse campo é obrigatório.'),
     phone_number: z.string().nonempty('Esse campo é obrigatório.'),
     cep: z.string().nonempty('Esse campo é obrigatório.'),

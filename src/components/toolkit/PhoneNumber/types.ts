@@ -5,7 +5,8 @@ import { RegisterMarketFormInputs } from '@/app/(user-scope)/mercados/cadastre-s
 import { InputProps } from '../Input/types'
 
 export interface PhoneNumberProps extends Omit<InputProps, 'name'> {
-  formMethods: UseFormReturn<RegisterMarketFormInputs>
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  formMethods: UseFormReturn<any>
   label?: string
   name: keyof RegisterMarketFormInputs
 }
