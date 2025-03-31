@@ -95,6 +95,7 @@ export const EditMarket: React.FC = () => {
   }) => {
     try {
       await instanceMotor.markets.updateMarket({
+        marketId: marketData.id,
         payload: {
           owner_id: user.id,
           description: marketDescription,
