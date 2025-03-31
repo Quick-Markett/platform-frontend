@@ -26,6 +26,7 @@ export interface CreateMarketPayload {
 }
 
 export interface UpdateMarketPayload {
+  marketId: number
   payload: Pick<
     Market,
     | 'address'
