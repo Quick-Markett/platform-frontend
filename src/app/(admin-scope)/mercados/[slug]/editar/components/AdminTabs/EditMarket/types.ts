@@ -1,14 +1,18 @@
 import { SetStateAction } from 'react'
 
-export interface RegisterMarketFormInputs {
-  address: string
-  cep: string
-  city: string
-  email: string
-  marketDescription: string
-  phone_number: string
-  state: string
-}
+import { DefaultFormFields } from '@/constants/forms/default-forms-fields'
+
+export interface RegisterMarketFormInputs
+  extends Pick<
+    DefaultFormFields,
+    | 'address'
+    | 'cep'
+    | 'city'
+    | 'email'
+    | 'marketDescription'
+    | 'phone_number'
+    | 'state'
+  > {}
 
 export interface AddressData {
   city: string
